@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f7fb;
+        color: #223;
+      }
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+      }
+      .actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        padding: 10px 14px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      .btn.secondary {
+        background: #4b5563;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1><%= title %></h1>
+      <form
+        action="<%= student ? `/students/${student.id}/update` : '/students' %>"
+        method="post"
+      >
+        <label for="nama">Nama</label>
+        <input
+          id="nama"
+          name="nama"
+          value="<%= student ? student.nama : '' %>"
+          required
+        />
+
+        <label for="nim">NIM</label>
+        <input
+          id="nim"
+          name="nim"
+          value="<%= student ? student.nim : '' %>"
+          required
+        />
+
+        <label for="jurusan">Jurusan</label>
+        <input
+          id="jurusan"
+          name="jurusan"
+          value="<%= student ? student.jurusan : '' %>"
+          required
+        />
+
+        <div class="actions">
+          <button class="btn" type="submit">Simpan</button>
+          <a class="btn secondary" href="/">Batal</a>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>

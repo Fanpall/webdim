@@ -1,0 +1,19 @@
+{
+  "name": "express-crud-web",
+  "version": "1.0.0",
+  "description": "A simple Express.js CRUD web app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}
