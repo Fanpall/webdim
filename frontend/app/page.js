@@ -23,6 +23,7 @@ export default function HomePage() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
 
   async function loadStudents(keyword = "") {
     setLoading(true);
@@ -57,6 +58,39 @@ export default function HomePage() {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     router.push("/login");
+  }
+
+  async function handleDelete(studentId) {
+    const confirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data mahasiswa ini?",
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(studentId);
+
+    const response = await fetch(`${API_URL}/${studentId}`, {
+      method: "DELETE",
+      headers: { ...authHeaders() },
+    });
+
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+      router.push("/login");
+      return;
+    }
+
+    if (!response.ok) {
+      window.alert("Gagal menghapus mahasiswa");
+      setDeletingId(null);
+      return;
+    }
+
+    setStudents((currentStudents) =>
+      currentStudents.filter((student) => student.id !== studentId),
+    );
+    setDeletingId(null);
   }
 
   return (
@@ -143,6 +177,14 @@ export default function HomePage() {
                       >
                         Edit
                       </Link>
+                      <button
+                        type="button"
+                        className="danger"
+                        onClick={() => handleDelete(student.id)}
+                        disabled={deletingId === student.id}
+                      >
+                        {deletingId === student.id ? "Menghapus..." : "Hapus"}
+                      </button>
                     </div>
                   </td>
                 </tr>

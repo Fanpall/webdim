@@ -66,3 +66,24 @@ test("GET /api/students?search=zzz returns an empty list for unknown keywords", 
   assert.equal(response.status, 200);
   assert.deepEqual(response.body, []);
 });
+
+test("DELETE /api/students/:id removes the selected student", async () => {
+  const createResponse = await request(app)
+    .post("/api/students")
+    .set("Authorization", `Bearer ${authToken}`)
+    .send({ nama: "Citra", nim: "2024002", jurusan: "Sistem Informasi" });
+
+  assert.equal(createResponse.status, 201);
+
+  const deleteResponse = await request(app)
+    .delete(`/api/students/${createResponse.body.id}`)
+    .set("Authorization", `Bearer ${authToken}`);
+
+  assert.equal(deleteResponse.status, 204);
+
+  const verifyResponse = await request(app)
+    .get(`/api/students/${createResponse.body.id}`)
+    .set("Authorization", `Bearer ${authToken}`);
+
+  assert.equal(verifyResponse.status, 404);
+});
