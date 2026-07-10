@@ -124,8 +124,13 @@ app.post("/api/auth/register", async (req, res) => {
   };
   users.push(newUser);
   writeUsers(users);
-
-  const token = generateToken({ id: newUser.id, username: newUser.username });
+  // default role for registered users
+  newUser.role = newUser.role || "viewer";
+  const token = generateToken({
+    id: newUser.id,
+    username: newUser.username,
+    role: newUser.role,
+  });
   res.status(201).json({ token, username: newUser.username });
 });
 
@@ -154,13 +159,21 @@ app.post("/api/auth/login", async (req, res) => {
       .json({ message: "Nama pengguna atau password salah" });
   }
 
-  const token = generateToken({ id: user.id, username: user.username });
+  const token = generateToken({
+    id: user.id,
+    username: user.username,
+    role: user.role || "viewer",
+  });
   res.json({ token, username: user.username });
 });
 
 app.get("/api/auth/me", authMiddleware, (req, res) => {
   res.json({ id: req.user.id, username: req.user.username });
 });
+
+// Modul15: User management routes (admin-only)
+const userRouter = require("./routes/user.routes");
+app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
   const students = readStudents();

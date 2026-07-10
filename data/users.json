@@ -3,5 +3,14 @@
     "id": "1783697595605",
     "username": "user1783697595131",
     "passwordHash": "$2a$10$YRniNgIGfyMiT0xwf/T/CulWlHM.30bW3kv.VdLkyeKZKd61wlBmy"
+  },
+  {
+    "id": "admin-1",
+    "username": "admin",
+    "name": "Administrator",
+    "email": "admin@example.com",
+    "passwordHash": "$2a$10$7NgVinrWEMCn50q5N9gFquJT5wjSm.56XFWIrYx3Srhx19edm0xZG",
+    "role": "admin",
+    "created_at": "2026-07-10T00:00:00.000Z"
   }
 ]
